@@ -1,5 +1,6 @@
 ﻿
 #include <iostream>
+#include <math.h>
 
 class Triangle
 {
@@ -25,6 +26,17 @@ public:
 		else {std::cout << "Этот треугольник нельзя построить\n";
 		}
 	}
+	unsigned int PerimeterTriangle() { return a + b + c; }
+	double AreaTriangle() {
+		if (TriangleCheck()) {
+			double p = static_cast<double>(PerimeterTriangle()) / 2.f;
+			return sqrt(p * (p - a) * (p - b) * (p - c));
+		}
+		else {
+			std::cout << "Нельзя найти площадь: ";
+			CanMakeTriAngle();
+		}
+	}
 
 	void PrintType() {
 		const char* Types[4] = { "разносторонний","равносторонний", "равнобедренный", "прямоугольный"};
@@ -42,7 +54,7 @@ public:
 			}
 			std::cout << "Это " << Types[cType] << " треугольник\n";
 		}
-		else { CanMakeTriAngle(); }
+		else { std::cout << "Нельзя определить тип: ";  CanMakeTriAngle(); }
 	}
 
 
@@ -61,9 +73,14 @@ private:
 int main()
 {
 	setlocale(LC_ALL, "rus");
-	Triangle triangle(4, 20, 5);
-	triangle.PrintType();
+	Triangle triangle(4, 20, 3);
+	
+	unsigned int perimeter = triangle.PerimeterTriangle();
+	double area = triangle.AreaTriangle();
+
+	std::cout << "Периметр: " << perimeter << " Площадь: " << area << std::endl;
 
 	triangle.CanMakeTriAngle();
+	triangle.PrintType();
 
 }
