@@ -26,16 +26,21 @@ public:
 		else {std::cout << "Этот треугольник нельзя построить\n";
 		}
 	}
-	unsigned int PerimeterTriangle() { return a + b + c; }
+	unsigned int PerimeterTriangle() { 
+		if (TriangleCheck()) {
+			return a + b + c; 
+		}
+		return 0;
+		}
+
 	double AreaTriangle() {
 		if (TriangleCheck()) {
 			double p = static_cast<double>(PerimeterTriangle()) / 2.f;
 			return sqrt(p * (p - a) * (p - b) * (p - c));
 		}
-		else {
-			std::cout << "Нельзя найти площадь: ";
-			CanMakeTriAngle();
-		}
+		std::cout << "Нельзя найти площадь: ";
+		CanMakeTriAngle();
+		return 0.f;
 	}
 
 	void PrintType() {
