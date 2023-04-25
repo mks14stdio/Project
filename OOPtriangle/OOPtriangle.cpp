@@ -18,31 +18,42 @@ public:
 	void setB(int B) { b = B; }
 	void setC(int C) { c = C; }
 
-	bool CanMakeTriAngle() {
-		if ((a < b + c) && (b < a + c) && (c < a + b)) {
-			return true;
+	void CanMakeTriAngle() {
+		if (TriangleCheck()) {
+			std::cout << "Этот треугольник можно построить\n";
 		}
-		return false;
+		else {std::cout << "Этот треугольник нельзя построить\n";
+		}
 	}
 
 	void PrintType() {
 		const char* Types[4] = { "разносторонний","равносторонний", "равнобедренный", "прямоугольный"};
 		int cType = 0;
 
-		if (a == b && b == c) {
-			cType = 1;
+		if (TriangleCheck()) {
+			if (a == b && b == c) {
+				cType = 1;
+			}
+			else if (a == b || a == c || b == c) {
+				cType = 2;
+			}
+			else if (a * a == b * b + c * c || b * b == a * a + b * b || c * c == a * a + b * b) {
+				cType = 3;
+			}
+			std::cout << "Это " << Types[cType] << " треугольник\n";
 		}
-		else if (a == b || a == c || b == c) {
-			cType = 2;
-		}
-		else if (a * a == b * b + c * c || b * b == a * a + b * b || c * c == a * a + b * b) {
-			cType = 3;
-		}
-		std::cout << "Это " << Types[cType] << " треугольник\n";
+		else { CanMakeTriAngle(); }
 	}
 
 
 private:
+	bool TriangleCheck() {
+		if ((a < b + c) && (b < a + c) && (c < a + b)) {
+			return true;
+		}
+		return false;
+	}
+
 	unsigned int a, b, c;
 };
 
@@ -50,10 +61,9 @@ private:
 int main()
 {
 	setlocale(LC_ALL, "rus");
-	Triangle triangle(12, 12, 12);
+	Triangle triangle(4, 20, 5);
 	triangle.PrintType();
 
-	bool can = triangle.CanMakeTriAngle();
-	std::cout << can << std::endl;
+	triangle.CanMakeTriAngle();
 
 }
